@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Bitunix Futures Control"
+version = "1.0.0"
+id = "artifacts/bitunix-control"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25574
+
+[services.development]
+run = "pnpm --filter @workspace/bitunix-control run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bitunix-control", "run", "build" ]
+publicDir = "artifacts/bitunix-control/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25574"
+BASE_PATH = "/"

@@ -1,0 +1,98 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Bitunix Futures Control Panel — Docker Compose stack
+#
+# Mirrors the Replit routing topology exactly:
+#   proxy  :80  — nginx reverse proxy (path-based)
+#   api    :8080 — Express API server
+#   frontend :80 — Vite-built React app via nginx
+#   postgres :5432 — PostgreSQL database
+#
+# Quick start:
+#   1. cp .env.example .env   (fill in BITUNIX_API_KEY, BITUNIX_API_SECRET,
+#                              SESSION_SECRET, POSTGRES_PASSWORD at minimum)
+#   2. docker compose up --build
+#
+# Migrations are applied automatically on the first boot of the postgres
+# container — all .sql files in lib/db/migrations/ are mounted to
+# /docker-entrypoint-initdb.d and executed in alphabetical order.
+# For upgrades on an existing volume, apply new migration files manually:
+#   docker compose exec postgres psql -U bitunix -d bitunix -f /docker-entrypoint-initdb.d/<filename>.sql
+#
+# For production: swap docker compose for docker swarm / k8s and store
+# secrets in your platform's secret manager.
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── PostgreSQL ──────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bitunix
+      POSTGRES_USER: bitunix
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Drop SQL migration files here to auto-run on first boot:
+      - ./lib/db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bitunix -d bitunix"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── API server ──────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: "8080"
+      NODE_ENV: production
+      DATABASE_URL: postgresql://bitunix:${POSTGRES_PASSWORD}@postgres:5432/bitunix
+      BITUNIX_API_KEY: ${BITUNIX_API_KEY:?BITUNIX_API_KEY is required}
+      BITUNIX_API_SECRET: ${BITUNIX_API_SECRET:?BITUNIX_API_SECRET is required}
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required}
+      DEFAULT_OBJECT_STORAGE_BUCKET_ID: ${DEFAULT_OBJECT_STORAGE_BUCKET_ID:-}
+      PRIVATE_OBJECT_DIR: /data/private
+      PUBLIC_OBJECT_SEARCH_PATHS: ${PUBLIC_OBJECT_SEARCH_PATHS:-}
+      AI_INTEGRATIONS_OPENAI_BASE_URL: ${AI_INTEGRATIONS_OPENAI_BASE_URL:-https://api.openai.com/v1}
+      AI_INTEGRATIONS_OPENAI_API_KEY: ${AI_INTEGRATIONS_OPENAI_API_KEY:-}
+    volumes:
+      - private_objects:/data/private
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/api/healthz | grep -q '\"status\":\"ok\"'"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ── Frontend ────────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+      args:
+        BASE_PATH: /
+    restart: unless-stopped
+
+  # ── Reverse proxy ───────────────────────────────────────────────────────────
+  proxy:
+  
+     build:
+      context: .
+      dockerfile: docker/proxy.Dockerfile
+  restart: unless stopped
+    ports:
+      - "${LISTEN_PORT:-80}:80"
+    depends_on:
+      - api
+      - frontend
+
+volumes:
+  pgdata:
+  private_objects:

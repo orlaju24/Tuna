@@ -1,0 +1,1701 @@
+{
+  "id": "d8d5f4ad-f63c-4a68-87da-10e1a82f18b6",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.favorites": {
+      "name": "favorites",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.triggers": {
+      "name": "triggers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "trigger_price": {
+          "name": "trigger_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "direction": {
+          "name": "direction",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "close_method": {
+          "name": "close_method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "armed": {
+          "name": "armed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "watcher_status": {
+          "name": "watcher_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "last_error": {
+          "name": "last_error",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "triggered_at": {
+          "name": "triggered_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.event_log": {
+      "name": "event_log",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_type": {
+          "name": "event_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_message": {
+          "name": "event_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.safeguards": {
+      "name": "safeguards",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "side": {
+          "name": "side",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "entry_price": {
+          "name": "entry_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "qty": {
+          "name": "qty",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leverage": {
+          "name": "leverage",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "position_id": {
+          "name": "position_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "threshold1_pct": {
+          "name": "threshold1_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'17'"
+        },
+        "threshold2_pct": {
+          "name": "threshold2_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'23'"
+        },
+        "trail_step_pct": {
+          "name": "trail_step_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'3'"
+        },
+        "state": {
+          "name": "state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'armed'"
+        },
+        "safeguard_price": {
+          "name": "safeguard_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "high_water_roi_pct": {
+          "name": "high_water_roi_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "close_method": {
+          "name": "close_method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'flash_close'"
+        },
+        "last_error": {
+          "name": "last_error",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "triggered_at": {
+          "name": "triggered_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.trade_journal": {
+      "name": "trade_journal",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "side": {
+          "name": "side",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leverage": {
+          "name": "leverage",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "position_id": {
+          "name": "position_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "entry_price": {
+          "name": "entry_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exit_price": {
+          "name": "exit_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "armed_at": {
+          "name": "armed_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exit_at": {
+          "name": "exit_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hold_duration_ms": {
+          "name": "hold_duration_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mfe_pct": {
+          "name": "mfe_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mae_pct": {
+          "name": "mae_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "peak_roi_pct": {
+          "name": "peak_roi_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "protected_roi_pct": {
+          "name": "protected_roi_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exit_roi_pct": {
+          "name": "exit_roi_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "giveback_pct": {
+          "name": "giveback_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "giveback_rating": {
+          "name": "giveback_rating",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "near_miss": {
+          "name": "near_miss",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "safeguard_used": {
+          "name": "safeguard_used",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "ratchet_count": {
+          "name": "ratchet_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "threshold1_pct": {
+          "name": "threshold1_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exit_reason": {
+          "name": "exit_reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "close_method": {
+          "name": "close_method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "execution_latency_ms": {
+          "name": "execution_latency_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "walk_away_active": {
+          "name": "walk_away_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "patience_level": {
+          "name": "patience_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "signal_score": {
+          "name": "signal_score",
+          "type": "numeric(4, 1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "htf_alignment": {
+          "name": "htf_alignment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "three_min_lead": {
+          "name": "three_min_lead",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "fifteen_min_confirm": {
+          "name": "fifteen_min_confirm",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "four_bar_streak": {
+          "name": "four_bar_streak",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "pivot_state": {
+          "name": "pivot_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "velocity_state": {
+          "name": "velocity_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "counter_move": {
+          "name": "counter_move",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "resumption": {
+          "name": "resumption",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "patience_boost": {
+          "name": "patience_boost",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "trail_width": {
+          "name": "trail_width",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "trade_plan_id": {
+          "name": "trade_plan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upload_used": {
+          "name": "upload_used",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "upload_key": {
+          "name": "upload_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "channel_zone_at_plan": {
+          "name": "channel_zone_at_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_bias_at_plan": {
+          "name": "user_bias_at_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "agreement_score_at_plan": {
+          "name": "agreement_score_at_plan",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "continuation_prob_at_plan": {
+          "name": "continuation_prob_at_plan",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recommended_patience_at_plan": {
+          "name": "recommended_patience_at_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "outcome_vs_plan": {
+          "name": "outcome_vs_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "edge_score": {
+          "name": "edge_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "whole_number_play_type": {
+          "name": "whole_number_play_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wallet_size_score": {
+          "name": "wallet_size_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verdict": {
+          "name": "verdict",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "setup_fingerprint": {
+          "name": "setup_fingerprint",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source_type": {
+          "name": "source_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.trade_plans": {
+      "name": "trade_plans",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "side": {
+          "name": "side",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_bias": {
+          "name": "user_bias",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upload_key": {
+          "name": "upload_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "upload_content_type": {
+          "name": "upload_content_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upload_bytes": {
+          "name": "upload_bytes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "channel_zone": {
+          "name": "channel_zone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "channel_tilt": {
+          "name": "channel_tilt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "trend_posture": {
+          "name": "trend_posture",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "detected_bias": {
+          "name": "detected_bias",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "agreement_score": {
+          "name": "agreement_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "continuation_prob_pct": {
+          "name": "continuation_prob_pct",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pivot_proximity_note": {
+          "name": "pivot_proximity_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recommended_patience": {
+          "name": "recommended_patience",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recommended_tightening": {
+          "name": "recommended_tightening",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "setup_quality": {
+          "name": "setup_quality",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risk_note": {
+          "name": "risk_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price_at_upload": {
+          "name": "price_at_upload",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "return_to_zone_pct": {
+          "name": "return_to_zone_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "return_to_zone_note": {
+          "name": "return_to_zone_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "entry_zone_note": {
+          "name": "entry_zone_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "invalidation_zone_note": {
+          "name": "invalidation_zone_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "confidence_level": {
+          "name": "confidence_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "likely_action": {
+          "name": "likely_action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "summary": {
+          "name": "summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_analysis": {
+          "name": "raw_analysis",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "consumed_at": {
+          "name": "consumed_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "consumed_by_safeguard_id": {
+          "name": "consumed_by_safeguard_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.auto_entry_config": {
+      "name": "auto_entry_config",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'BTCUSDT'"
+        },
+        "side": {
+          "name": "side",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'SIGNAL'"
+        },
+        "max_margin_usdt": {
+          "name": "max_margin_usdt",
+          "type": "numeric(20, 4)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'500'"
+        },
+        "leverage": {
+          "name": "leverage",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 50
+        },
+        "min_liq_gap_usdt": {
+          "name": "min_liq_gap_usdt",
+          "type": "numeric(20, 4)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'3000'"
+        },
+        "min_edge_score": {
+          "name": "min_edge_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 65
+        },
+        "avoid_middles": {
+          "name": "avoid_middles",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "allowed_windows_json": {
+          "name": "allowed_windows_json",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "blocked_windows_json": {
+          "name": "blocked_windows_json",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "auto_arm_safeguard": {
+          "name": "auto_arm_safeguard",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "safeguard_threshold1_pct": {
+          "name": "safeguard_threshold1_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'17'"
+        },
+        "safeguard_trail_pct": {
+          "name": "safeguard_trail_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'3'"
+        },
+        "session_frozen": {
+          "name": "session_frozen",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "walk_away_mode": {
+          "name": "walk_away_mode",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "post_win_humility_until": {
+          "name": "post_win_humility_until",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.auto_entry_log": {
+      "name": "auto_entry_log",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "evaluated_at": {
+          "name": "evaluated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "allowed": {
+          "name": "allowed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_reasons": {
+          "name": "block_reasons",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'"
+        },
+        "position_flat": {
+          "name": "position_flat",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time_window_ok": {
+          "name": "time_window_ok",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "avoid_middles_ok": {
+          "name": "avoid_middles_ok",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "edge_ok": {
+          "name": "edge_ok",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "liq_gap_ok": {
+          "name": "liq_gap_ok",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plan_gate_ok": {
+          "name": "plan_gate_ok",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plan_likely_action": {
+          "name": "plan_likely_action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plan_confidence_level": {
+          "name": "plan_confidence_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plan_agreement_score": {
+          "name": "plan_agreement_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plan_return_to_zone_note": {
+          "name": "plan_return_to_zone_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "edge_score": {
+          "name": "edge_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "edge_grade": {
+          "name": "edge_grade",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "liq_gap_estimate": {
+          "name": "liq_gap_estimate",
+          "type": "numeric(20, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "detected_side": {
+          "name": "detected_side",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_price": {
+          "name": "current_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "entry_opened": {
+          "name": "entry_opened",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "entry_symbol": {
+          "name": "entry_symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "entry_side": {
+          "name": "entry_side",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "entry_price": {
+          "name": "entry_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "entry_qty": {
+          "name": "entry_qty",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "margin_used": {
+          "name": "margin_used",
+          "type": "numeric(20, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "position_id": {
+          "name": "position_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "safeguard_armed": {
+          "name": "safeguard_armed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "safeguard_id": {
+          "name": "safeguard_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hindsight_examples": {
+      "name": "hindsight_examples",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'BTCUSDT'"
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'upload'"
+        },
+        "direction": {
+          "name": "direction",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leverage": {
+          "name": "leverage",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "entry_price": {
+          "name": "entry_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exit_price": {
+          "name": "exit_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "roi_pct": {
+          "name": "roi_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btc_spot_price": {
+          "name": "btc_spot_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "whole_number_nearest": {
+          "name": "whole_number_nearest",
+          "type": "numeric(20, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "whole_number_relation": {
+          "name": "whole_number_relation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "whole_number_dist_pct": {
+          "name": "whole_number_dist_pct",
+          "type": "numeric(6, 3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "trade_timestamp": {
+          "name": "trade_timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_bucket": {
+          "name": "session_bucket",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "time_of_day_label": {
+          "name": "time_of_day_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "close_type": {
+          "name": "close_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "trigger_type": {
+          "name": "trigger_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "profit_status": {
+          "name": "profit_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "outcome_class": {
+          "name": "outcome_class",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "market_regime": {
+          "name": "market_regime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "confidence_score": {
+          "name": "confidence_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "extraction_notes": {
+          "name": "extraction_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_extraction": {
+          "name": "raw_extraction",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_key": {
+          "name": "image_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_notes": {
+          "name": "user_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tags": {
+          "name": "tags",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "journal_id": {
+          "name": "journal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.edge_fingerprints": {
+      "name": "edge_fingerprints",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "journal_id": {
+          "name": "journal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'BTCUSDT'"
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'auto'"
+        },
+        "fingerprint": {
+          "name": "fingerprint",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quality_label": {
+          "name": "quality_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'transitional'"
+        },
+        "outcome": {
+          "name": "outcome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'unknown'"
+        },
+        "roi_pct": {
+          "name": "roi_pct",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "example_type": {
+          "name": "example_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_mentor_example": {
+          "name": "is_mentor_example",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.position_entry_log": {
+      "name": "position_entry_log",
+      "schema": "",
+      "columns": {
+        "position_id": {
+          "name": "position_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "side": {
+          "name": "side",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leverage": {
+          "name": "leverage",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "entry_price": {
+          "name": "entry_price",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "opened_at": {
+          "name": "opened_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "edge_score": {
+          "name": "edge_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wallet_size_score": {
+          "name": "wallet_size_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "whole_number_play_type": {
+          "name": "whole_number_play_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "signal_score": {
+          "name": "signal_score",
+          "type": "numeric(4, 1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "htf_alignment": {
+          "name": "htf_alignment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patience_level": {
+          "name": "patience_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "three_min_lead": {
+          "name": "three_min_lead",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "fifteen_min_confirm": {
+          "name": "fifteen_min_confirm",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "four_bar_streak": {
+          "name": "four_bar_streak",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "pivot_state": {
+          "name": "pivot_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "velocity_state": {
+          "name": "velocity_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "counter_move": {
+          "name": "counter_move",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "resumption": {
+          "name": "resumption",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "patience_boost": {
+          "name": "patience_boost",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "trail_width": {
+          "name": "trail_width",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "trade_plan_id": {
+          "name": "trade_plan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upload_used": {
+          "name": "upload_used",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "upload_key": {
+          "name": "upload_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "channel_zone_at_plan": {
+          "name": "channel_zone_at_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_bias_at_plan": {
+          "name": "user_bias_at_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "agreement_score_at_plan": {
+          "name": "agreement_score_at_plan",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "continuation_prob_at_plan": {
+          "name": "continuation_prob_at_plan",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recommended_patience_at_plan": {
+          "name": "recommended_patience_at_plan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'detected'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

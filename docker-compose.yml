@@ -1,0 +1,80 @@
+# ════════════════════════════════════════════════════════════════════════════
+#  Bitunix Futures Control — docker-compose for local testing & Coolify
+# ════════════════════════════════════════════════════════════════════════════
+#
+#  Local usage:
+#    1. cp .env.example .env   — fill in your real secrets
+#    2. docker compose up --build
+#    3. Open http://localhost:3000
+#
+#  Coolify:
+#    Build pack: Docker Compose → this repository.
+#    Set all required env vars in Coolify → Service → Env Vars.
+#    For a managed Hetzner DB: remove the `postgres` service and
+#    `postgres_data` volume, point DATABASE_URL at the managed instance.
+#
+# ════════════════════════════════════════════════════════════════════════════
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_PORT: "3000"
+        BUILD_BASE_PATH: "/"
+    image: bitunix-control:latest
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-3000}:${PORT:-3000}"
+    environment:
+      NODE_ENV: production
+      PORT: "${PORT:-3000}"
+      STATIC_PATH: /app/public
+      DATABASE_URL: "${DATABASE_URL}"
+      APP_PASSWORD: "${APP_PASSWORD}"
+      BITUNIX_API_KEY: "${BITUNIX_API_KEY}"
+      BITUNIX_API_SECRET: "${BITUNIX_API_SECRET}"
+      INTERNAL_TRIGGER_TOKEN: "${INTERNAL_TRIGGER_TOKEN:-}"
+      KILL_COOLDOWN: "${KILL_COOLDOWN:-3}"
+      DEFAULT_SYMBOL: "${DEFAULT_SYMBOL:-BTCUSDT}"
+    volumes:
+      - app_logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - >
+          fetch('http://localhost:' + (process.env.PORT || 3000) + '/api/healthz')
+            .then(r => process.exit(r.ok ? 0 : 1))
+            .catch(() => process.exit(1));
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER:-bitunix}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-changeme}"
+      POSTGRES_DB: "${POSTGRES_DB:-bitunix}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bitunix}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "127.0.0.1:5432:5432"
+
+volumes:
+  app_logs:
+  postgres_data:

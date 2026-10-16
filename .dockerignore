@@ -1,0 +1,73 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Docker build context exclusions — keeps build context small and fast
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Dependencies (reinstalled in image)
+node_modules
+**/node_modules
+
+# Build outputs (rebuilt in image)
+dist
+**/dist
+*.tsbuildinfo
+
+# Dev / local
+.env
+.local
+.cache
+.git
+.gitignore
+
+# Replit
+.replit
+.replitignore
+
+# Test / docs
+CHANGELOG.md
+STRESS_TEST.md
+*.pdf
+attached_assets
+
+# IDE
+.vscode
+.idea
+# ── Version control ───────────────────────────────────────────────────────
+.git
+.gitignore
+
+# ── Replit-specific files ─────────────────────────────────────────────────
+.replit
+.replit-artifact
+replit.nix
+.config/
+.local/
+.agents/
+.cache/
+
+# ── Build outputs (rebuilt inside Docker) ────────────────────────────────
+artifacts/*/dist
+artifacts/*/node_modules
+lib/*/dist
+lib/*/node_modules
+node_modules
+scripts/node_modules
+
+# ── Test / coverage ───────────────────────────────────────────────────────
+coverage/
+**/*.test.ts
+**/*.spec.ts
+
+# ── Logs ─────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── OS / editor noise ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ── Environment files (secrets must be injected at runtime in Coolify) ───
+.env
+.env.*
+!.env.example

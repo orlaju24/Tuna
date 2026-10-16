@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/kill-switch"
+title = "Bitunix Kill Switch"
+version = "1.0.0"
+id = "artifacts/kill-switch"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/kill-switch" ]
+localPort = 18912
+
+[services.development]
+run = "pnpm --filter @workspace/kill-switch run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kill-switch", "run", "build" ]
+publicDir = "artifacts/kill-switch/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18912"
+BASE_PATH = "/kill-switch"
